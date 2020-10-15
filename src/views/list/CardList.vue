@@ -17,11 +17,18 @@
             <a-card-meta>
               <a slot="title">{{ item.title }}</a>
               <a-avatar class="card-avatar" slot="avatar" :src="item.avatar" size="large"/>
-              <div class="meta-content" slot="description">{{ item.content }}</div>
+              <div class="meta-content" slot="description">
+                <trend flag="down" style="margin-right: 16px;">
+                  <span slot="term">异常数据比例</span>
+                  {{ Math.round(Math.random() * 100) / 10 }}%
+                </trend>
+                <div style="color: #72c040;margin-top: 8px">
+                  设备工作正常
+                </div>
+              </div>
             </a-card-meta>
             <template class="ant-card-actions" slot="actions">
-              <a>操作一</a>
-              <a>操作二</a>
+              <a>查看数据列表</a>
             </template>
           </a-card>
         </template>
@@ -33,12 +40,13 @@
 <script>
 
 const dataSource = []
-dataSource.push({})
+const tileList = ['陈*燕', '李*庆', '陈*宝', '王*兰', '李*', '田*', '王*光', '赵*传', '潘*', '李*青', '潘*铭']
+// dataSource.push({})
 for (let i = 0; i < 11; i++) {
   dataSource.push({
     id: i,
-    title: 'Alipay',
-    avatar: 'https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png',
+    title: tileList[i],
+    avatar: '/device.png',
     content: '在中台产品的研发过程中，会出现不同的设计规范和实现方式，但其中往往存在很多类似的页面和组件，这些类似的组件会被抽离成一套标准规范。'
   })
 }
@@ -100,7 +108,7 @@ export default {
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
-      height: 64px;
+      height: 48px;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
 

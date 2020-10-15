@@ -61,20 +61,20 @@
       </a-form>
     </div>
 
-    <div class="table-operator">
-      <a-button type="primary" icon="plus" @click="$refs.createModal.add()">新建</a-button>
-      <a-button type="dashed" @click="tableOption">{{ optionAlertShow && '关闭' || '开启' }} alert</a-button>
-      <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
-        <a-menu slot="overlay">
-          <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>
-          <!-- lock | unlock -->
-          <a-menu-item key="2"><a-icon type="lock" />锁定</a-menu-item>
-        </a-menu>
-        <a-button style="margin-left: 8px">
-          批量操作 <a-icon type="down" />
-        </a-button>
-      </a-dropdown>
-    </div>
+<!--    <div class="table-operator">-->
+<!--      <a-button type="primary" icon="plus" @click="$refs.createModal.add()">新建</a-button>-->
+<!--      <a-button type="dashed" @click="tableOption">{{ optionAlertShow && '关闭' || '开启' }} alert</a-button>-->
+<!--      <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">-->
+<!--        <a-menu slot="overlay">-->
+<!--          <a-menu-item key="1"><a-icon type="delete" />删除</a-menu-item>-->
+<!--          &lt;!&ndash; lock | unlock &ndash;&gt;-->
+<!--          <a-menu-item key="2"><a-icon type="lock" />锁定</a-menu-item>-->
+<!--        </a-menu>-->
+<!--        <a-button style="margin-left: 8px">-->
+<!--          批量操作 <a-icon type="down" />-->
+<!--        </a-button>-->
+<!--      </a-dropdown>-->
+<!--    </div>-->
 
     <s-table
       ref="table"
@@ -82,7 +82,6 @@
       rowKey="key"
       :columns="columns"
       :data="loadData"
-      :alert="options.alert"
       :rowSelection="options.rowSelection"
       showPagination="auto"
     >
@@ -90,17 +89,20 @@
         {{ index + 1 }}
       </span>
       <span slot="status" slot-scope="text">
-        <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
+        {{ text }}
       </span>
       <span slot="description" slot-scope="text">
-        <ellipsis :length="4" tooltip>{{ text }}</ellipsis>
+        <ellipsis :length="20" tooltip>{{ text }}</ellipsis>
+      </span>
+      <span slot="processServer" slot-scope="text">
+        <ellipsis :length="20" tooltip>{{ text }}</ellipsis>
       </span>
 
       <span slot="action" slot-scope="text, record">
         <template>
-          <a @click="handleEdit(record)">配置</a>
+          <a @click="handleEdit(record)">下载</a>
           <a-divider type="vertical" />
-          <a @click="handleSub(record)">订阅报警</a>
+          <a @click="handleSub(record)">删除</a>
         </template>
       </span>
     </s-table>
@@ -157,28 +159,26 @@ export default {
           scopedSlots: { customRender: 'serial' }
         },
         {
-          title: '规则编号',
+          title: '文件名',
           dataIndex: 'no'
         },
         {
-          title: '描述',
+          title: '文件大小',
           dataIndex: 'description',
           scopedSlots: { customRender: 'description' }
         },
         {
-          title: '服务调用次数',
-          dataIndex: 'callNo',
-          sorter: true,
-          needTotal: true,
-          customRender: (text) => text + ' 次'
+          title: '处理服务器',
+          dataIndex: 'processServer',
+          scopedSlots: { customRender: 'description' }
         },
         {
-          title: '状态',
+          title: '上传设备',
           dataIndex: 'status',
           scopedSlots: { customRender: 'status' }
         },
         {
-          title: '更新时间',
+          title: '处理设备',
           dataIndex: 'updatedAt',
           sorter: true
         },

@@ -18,10 +18,11 @@ const serverList = (options) => {
     result.push({
       key: tmpKey,
       id: tmpKey,
-      no: 'No ' + tmpKey,
-      description: '这是一段描述',
+      no: 'data-' + (next - i) + '.wav',
+      description: Mock.mock('@integer(1006490, 1800000)') + ' (byte)',
+      processServer: 'Ali Cloud ' + Mock.mock('@integer(1, 3)'),
       callNo: Mock.mock('@integer(1, 999)'),
-      status: Mock.mock('@integer(0, 3)'),
+      status: '测试设备Q',
       updatedAt: Mock.mock('@datetime'),
       editable: false
     })
